@@ -83,3 +83,38 @@ for tc in range(1, T+1):
                 start = i - cnt # 현재 인덱스 위치 i에서 연속된 1의 개수(cnt)만큼 빼주면 시작점이 나옴
             cnt = 0
     print(f'#{tc} {start} {max_cnt+1}')
+
+
+# 세 번째 풀이(4/6)
+T = int(input())
+for tc in range(1,T+1):
+    N = int(input())
+    room = [list(map(int, input().split())) for _ in range(N)]
+    
+    dr = [0,1,0,-1]
+    dc = [1,0,-1,0]
+    
+    results = [] # 결과를 담을 리스트 (이동 방 개수, 방 번호)
+    
+    for i in range(N):
+        for j in range(N):
+            r, c = i, j
+            count = 1
+            dir = 0
+            while dir < 4: # 4방향 모두 검사했는데 갈 곳이 없으면 종료
+                for d in range(4):
+                    dir += 1
+                    nr = r + dr[d]
+                    nc = c + dc[d]
+                    if nr < 0 or nr >= N or nc < 0 or nc >= N: # 배열 범위 검사
+                        continue
+                    if room[r][c] + 1 == room[nr][nc]: # 이동 가능 조건
+                        count += 1
+                        r = nr
+                        c = nc
+                        dir = 0
+            results.append((count, room[i][j])) # (이동 방 개수, 방 번호)
+    
+    results.sort(key = lambda x:(-x[0], x[1])) # count 기준 내림차순, 방 번호 기준 오름차순 정렬
+    
+    print(f'#{tc} {results[0][1]} {results[0][0]}')
