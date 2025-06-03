@@ -1,3 +1,4 @@
+# 첫 번째 풀이
 T = int(input())
 
 for tc in range(1, T+1):
@@ -39,3 +40,39 @@ for tc in range(1, T+1):
         for j in range(N):
             print(snail[i][j], end=' ')
         print()
+
+
+# 두 번째 풀이(6/3)
+T = int(input())
+for tc in range(1, T+1):
+    N = int(input())
+    arr = [[0] * N for _ in range(N)]
+    
+    dr = [0,1,0,-1]
+    dc = [1,0,-1,0]
+    
+    num = 1
+    r = c = 0
+    
+    arr[r][c] = num
+    num += 1
+    
+    while num <= N**2:
+        for d in range(4):
+            while True:
+                nr = r+dr[d]
+                nc = c+dc[d]
+                
+                if nr < 0 or nr >= N or nc < 0 or nc >= N:
+                    break
+                
+                if arr[nr][nc] != 0: # 이미 숫자가 들어가있다면 break
+                    break
+                
+                arr[nr][nc] = num
+                num += 1
+                r, c = nr, nc
+            
+    print(f'#{tc}')
+    for row in arr:
+        print(*row)
